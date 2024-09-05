@@ -10,9 +10,6 @@ const BOT_MSGS = [
   "I feel sleepy! :("
 ];
 
-// Icons made by Freepik from www.flaticon.com
-const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
-const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
 const BOT_NAME = "BOT";
 const PERSON_NAME = "Garmur";
 
@@ -22,31 +19,40 @@ msgerForm.addEventListener("submit", event => {
   const msgText = msgerInput.value;
   if (!msgText) return;
 
-  appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+  appendMessage(PERSON_NAME, "right", msgText);
   msgerInput.value = "";
 
   botResponse();
 });
 
-function appendMessage(name, img, side, text) {
-  //   Simple solution for small apps
-  const msgHTML = `
-    <div class="msg ${side}-msg">
-      <div class="msg-img" style="background-image: url(${img})"></div>
+function appendMessage(alias, side, text) {
+	const message = document.createElement("div")
+	message.setAttribute("class", `msg ${side}-msg`)
 
-      <div class="msg-bubble">
-        <div class="msg-info">
-          <div class="msg-info-name">${name}</div>
-          <div class="msg-info-time">${formatDate(new Date())}</div>
-        </div>
+	const bubble = document.createElement("div")
+	bubble.setAttribute("class", "msg-bubble")
+	message.appendChild(bubble)
 
-        <div class="msg-text">${text}</div>
-      </div>
-    </div>
-  `;
+	const info = document.createElement("div")
+	info.setAttribute("class", "msg-info")
+	bubble.appendChild(info)
 
-  msgerChat.insertAdjacentHTML("beforeend", msgHTML);
-  msgerChat.scrollTop += 500;
+	const name = document.createElement("div")
+	name.setAttribute("class", "msg-info-name")
+	name.textContent = alias
+	info.appendChild(name)
+
+	const time = document.createElement("div")
+	time.setAttribute("class", "msg-info-time")
+	time.textContent = formatDate(new Date())
+	info.appendChild(time)
+
+	const content = document.createElement("div")
+	content.setAttribute("class", "msg-text")
+	content.textContent = text
+	bubble.appendChild(content)
+	msgerChat.appendChild(message)
+	msgerChat.scrollTop += 500;
 }
 
 function botResponse() {
@@ -55,7 +61,7 @@ function botResponse() {
   const delay = msgText.split(" ").length * 100;
 
   setTimeout(() => {
-    appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+	appendMessage(BOT_NAME, "left", msgText);
   }, delay);
 }
 
