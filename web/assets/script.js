@@ -2,14 +2,6 @@ const msgerForm = get(".msger-inputarea");
 const msgerInput = get(".msger-input");
 const msgerChat = get(".msger-chat");
 
-const BOT_MSGS = [
-  "Hi, how are you?",
-  "Ohh... I can't understand what you trying to say. Sorry!",
-  "I like to play games... But I don't know how to play!",
-  "Sorry if my answers are not relevant. :))",
-  "I feel sleepy! :("
-];
-
 const BOT_NAME = "BOT";
 const PERSON_NAME = "Garmur";
 
@@ -64,8 +56,7 @@ function appendMessage(alias, side, text) {
 }
 
 function botResponse() {
-  const r = random(0, BOT_MSGS.length - 1);
-  const msgText = BOT_MSGS[r];
+  const msgText = "Static text for testing answers"
   const delay = msgText.split(" ").length * 100;
 
   setTimeout(() => {
@@ -83,8 +74,4 @@ function formatDate(date) {
   const m = "0" + date.getMinutes();
 
   return `${h.slice(-2)}:${m.slice(-2)}`;
-}
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
 }
