@@ -96,6 +96,9 @@ body {
 .msg-info-time {
 	font-size: 0.85em;
 }
+.msg-text {
+	overflow-wrap: break-word;
+}
 .msg-indicator {
 	margin-top: 3px;
 	text-align: right;
