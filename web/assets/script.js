@@ -51,6 +51,14 @@ function appendMessage(alias, side, text) {
 	content.setAttribute("class", "msg-text")
 	content.textContent = text
 	bubble.appendChild(content)
+
+	if (side == "right") {
+		const indicator = document.createElement("div")
+		indicator.setAttribute("class", "msg-indicator")
+		indicator.textContent = "⌛"
+		bubble.appendChild(indicator)
+	}
+
 	msgerChat.appendChild(message)
 	msgerChat.scrollTop += 500;
 }

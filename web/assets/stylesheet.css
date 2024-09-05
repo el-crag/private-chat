@@ -96,6 +96,10 @@ body {
 .msg-info-time {
 	font-size: 0.85em;
 }
+.msg-indicator {
+	margin-top: 3px;
+	text-align: right;
+}
 
 .left-msg .msg-bubble {
 	border-bottom-left-radius: 0;
