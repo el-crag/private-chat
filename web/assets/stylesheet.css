@@ -44,6 +44,9 @@ body {
 	background: #eee;
 	color: #666;
 }
+.msger-header-options span {
+	margin: 0 10px;
+}
 
 .msger-chat {
 	flex: 1;
