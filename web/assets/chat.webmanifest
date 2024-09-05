@@ -1,0 +1,43 @@
+{
+	"name": "Private Chat | 1 - 1",
+	"short_name": "Private Chat",
+	"description": "Mensajes directos.",
+	"display": "standalone",
+	"start_url": "/?utm_source=pwa",
+	"scope": "/",
+	"background_color": "#98c8a1",
+	"theme_color": "#75a283",
+	"icons": [
+		{
+			"src": "img/logo.png",
+			"type": "image/png",
+			"sizes": "64x64"
+		},
+		{
+			"src": "img/logo-144.png",
+			"type": "image/png",
+			"sizes": "144x144"
+		},
+		{
+			"src": "img/logo-192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "img/logo-384.png",
+			"type": "image/png",
+			"sizes": "384x384"
+		},
+		{
+			"src": "img/logo-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		},
+		{
+			"src": "img/logo.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any"
+		}
+	]
+}
