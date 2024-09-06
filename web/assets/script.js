@@ -1,8 +1,35 @@
 class Chat {
 	#db
+	#security
+	#user
 
 	constructor() {
 		this.#db = new JsStore.Connection()
+		this.#security = new Security()
+	}
+
+	configUser() {
+		let user = window.prompt("Nombre de usuario")
+		if (!user) {
+			alert("Nombre no insertado.")
+		}
+
+		this.#user = user
+
+		this.#saveUser()
+	}
+
+	#saveUser() {
+		let option = {
+			key: "user",
+			option: this.#user,
+		}
+
+		this.#db.insert({
+			validation: false,
+			into: "option",
+			values: [option],
+		})
 	}
 
 	handleMessage(form) {
@@ -33,7 +60,7 @@ class Chat {
 
 		const name = document.createElement("div")
 		name.setAttribute("class", "msg-info-name")
-		name.textContent = "You"
+		name.textContent = this.#user
 		info.appendChild(name)
 
 		const time = document.createElement("div")
@@ -95,10 +122,23 @@ class Chat {
 				alert("db created")
 			}
 
+			this.#populateOptions()
 			this.#populate()
 		})
 		.catch(e => {
 			console.error(e)
+		})
+	}
+
+	#populateOptions() {
+		this.#db.select({
+			from: "option",
+		}).then(options => {
+			for (const option of options) {
+				if (option.key == "user") {
+					this.#user = option.option
+				}
+			}
 		})
 	}
 
