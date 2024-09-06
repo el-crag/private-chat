@@ -44,7 +44,8 @@ body {
 	background: #eee;
 	color: #666;
 }
-.msger-header-options span {
+.msger-header-options button {
+	padding: 3px;
 	margin: 0 10px;
 }
 
