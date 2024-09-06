@@ -89,9 +89,24 @@ class Chat {
 			if(isDbCreated) {
 				alert("db created")
 			}
+
+			this.#populate()
 		})
 		.catch(e => {
 			console.error(e)
+		})
+	}
+
+	#populate() {
+		let results = this.#db.select({
+			from: "message",
+			limit: 6
+		}).then(messages => {
+			for (const message of messages) {
+				const m = new Message()
+				m.assign(message)
+				this.#appendMessage(m)
+			}
 		})
 	}
 }
@@ -112,6 +127,14 @@ class Message {
 		}
 
 		this.#own = true
+	}
+
+	assign(message) {
+		this.#content = message.content
+		this.#own = message.own
+		this.#uuid = message.uuid
+		this.#date = message.instant
+		this.#status = message.sent
 	}
 
 	save(db) {
