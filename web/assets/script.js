@@ -15,6 +15,8 @@ class Chat {
 		this.#appendMessage(message)
 
 		form.reset()
+
+		message.save(this.#db)
 	}
 
 	#appendMessage(message) {
@@ -99,14 +101,33 @@ class Message {
 	#date
 	#status
 	#own
+	#uuid
 
 	constructor(content, isNew = false) {
 		this.#content = content
 		if (isNew) {
 			this.#date = new Date()
+			this.#uuid = crypto.randomUUID().replace(/-/g, "").padStart(32, '0')
+			this.#status = false
 		}
 
 		this.#own = true
+	}
+
+	save(db) {
+		let message = {
+			uuid: this.#uuid,
+			sent: this.#status,
+			own: this.#own,
+			content: this.#content,
+			instant: this.#date,
+		}
+
+		db.insert({
+			validation: false,
+			into: "message",
+			values: [message],
+		})
 	}
 
 	setOwn(own) {
