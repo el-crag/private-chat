@@ -23,12 +23,12 @@
 				</div>
 			</header>
 
-			<main class="msger-chat">
+			<main class="msger-chat" id="messengerChat">
 			</main>
 
-			<form class="msger-inputarea">
-				<input type="text" class="msger-input" placeholder="Escribe el mensaje...">
-				<button type="submit" class="msger-send-btn">Enviar</button>
+			<form class="msger-inputarea" onsubmit="chat.handleMessage(this);return false">
+				<input type="text" name="message" class="msger-input" placeholder="Escribe el mensaje...">
+				<button id="messengerButton" type="submit" class="msger-send-btn">Enviar</button>
 			</form>
 		</section>
 		<script src="assets/script.js"></script>

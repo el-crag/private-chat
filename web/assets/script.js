@@ -1,77 +1,102 @@
-const msgerForm = get(".msger-inputarea");
-const msgerInput = get(".msger-input");
-const msgerChat = get(".msger-chat");
+class Chat {
+	#db
 
-const BOT_NAME = "BOT";
-const PERSON_NAME = "Garmur";
-
-msgerForm.addEventListener("submit", event => {
-  event.preventDefault();
-
-  const msgText = msgerInput.value;
-  if (!msgText) return;
-
-  appendMessage(PERSON_NAME, "right", msgText);
-  msgerInput.value = "";
-
-  botResponse();
-});
-
-function appendMessage(alias, side, text) {
-	const message = document.createElement("div")
-	message.setAttribute("class", `msg ${side}-msg`)
-
-	const bubble = document.createElement("div")
-	bubble.setAttribute("class", "msg-bubble")
-	message.appendChild(bubble)
-
-	const info = document.createElement("div")
-	info.setAttribute("class", "msg-info")
-	bubble.appendChild(info)
-
-	const name = document.createElement("div")
-	name.setAttribute("class", "msg-info-name")
-	name.textContent = alias
-	info.appendChild(name)
-
-	const time = document.createElement("div")
-	time.setAttribute("class", "msg-info-time")
-	time.textContent = formatDate(new Date())
-	info.appendChild(time)
-
-	const content = document.createElement("div")
-	content.setAttribute("class", "msg-text")
-	content.textContent = text
-	bubble.appendChild(content)
-
-	if (side == "right") {
-		const indicator = document.createElement("div")
-		indicator.setAttribute("class", "msg-indicator")
-		indicator.textContent = "⌛"
-		bubble.appendChild(indicator)
+	constructor() {
+		this.#db = new JsStore.Connection()
 	}
 
-	msgerChat.appendChild(message)
-	msgerChat.scrollTop += 500;
+	handleMessage(form) {
+		let message = new Message(form.elements.message.value, true)
+
+		if (!message.hasContent()) {
+			return
+		}
+
+		this.#appendMessage(message)
+
+		form.reset()
+	}
+
+	#appendMessage(message) {
+		const wrapper = document.createElement("div")
+		wrapper.setAttribute("class", message.isOwn() ? "msg right-msg" : "msg left-msg")
+
+		const bubble = document.createElement("div")
+		bubble.setAttribute("class", "msg-bubble")
+		wrapper.appendChild(bubble)
+
+		const info = document.createElement("div")
+		info.setAttribute("class", "msg-info")
+		bubble.appendChild(info)
+
+		const name = document.createElement("div")
+		name.setAttribute("class", "msg-info-name")
+		name.textContent = "You"
+		info.appendChild(name)
+
+		const time = document.createElement("div")
+		time.setAttribute("class", "msg-info-time")
+		time.textContent = message.getFormattedDate()
+		info.appendChild(time)
+
+		const content = document.createElement("div")
+		content.setAttribute("class", "msg-text")
+		content.textContent = message.getContent()
+		bubble.appendChild(content)
+
+		if (message.isOwn()) {
+			const indicator = document.createElement("div")
+			indicator.setAttribute("class", "msg-indicator")
+			indicator.textContent = "⌛"
+			bubble.appendChild(indicator)
+		}
+
+		messengerChat.appendChild(wrapper)
+		messengerChat.scrollTop += 500;
+	}
 }
 
-function botResponse() {
-  const msgText = "Static text for testing answers"
-  const delay = msgText.split(" ").length * 100;
+class Message {
+	#content
+	#date
+	#status
+	#own
 
-  setTimeout(() => {
-	appendMessage(BOT_NAME, "left", msgText);
-  }, delay);
+	constructor(content, isNew = false) {
+		this.#content = content
+		if (isNew) {
+			this.#date = new Date()
+		}
+
+		this.#own = true
+	}
+
+	setOwn(own) {
+		return this.#own = own
+	}
+
+	isOwn() {
+		return this.#own
+	}
+
+	hasContent() {
+		return this.#content.length > 0
+	}
+
+	setDate(date) {
+		this.#date = date
+	}
+
+	getContent() {
+		return this.#content
+	}
+
+	getFormattedDate() {
+		const h = "0" + this.#date.getHours()
+		const m = "0" + this.#date.getMinutes()
+
+		return `${h.slice(-2)}:${m.slice(-2)}`
+	}
 }
 
-// Utils
-function get(selector, root = document) {
-  return root.querySelector(selector);
-}
-
-function formatDate(date) {
-  const h = "0" + date.getHours();
-  const m = "0" + date.getMinutes();
-
-  return `${h.slice(-2)}:${m.slice(-2)}`;
-}
+var chat = new Chat()
