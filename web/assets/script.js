@@ -274,7 +274,7 @@ class Security {
 		return exportedPublicKey
 	}
 
-	async function testSign() {
+	async testSign() {
 		const exportedPublic = await security.exportPublicKey()
 		console.log("Public:", exportedPublic)
 
