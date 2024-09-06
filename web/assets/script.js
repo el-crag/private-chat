@@ -19,7 +19,7 @@ class Chat {
 		message.save(this.#db)
 	}
 
-	#appendMessage(message) {
+	#appendMessage(message, down = true) {
 		const wrapper = document.createElement("div")
 		wrapper.setAttribute("class", message.isOwn() ? "msg right-msg" : "msg left-msg")
 
@@ -53,8 +53,13 @@ class Chat {
 			bubble.appendChild(indicator)
 		}
 
-		messengerChat.appendChild(wrapper)
-		messengerChat.scrollTop += 500;
+		if (down) {
+			messengerChat.appendChild(wrapper)
+			messengerChat.scrollTop += 500;
+		}
+		else {
+			messengerChat.insertBefore(wrapper, messengerChat.firstChild)
+		}
 	}
 
 	initDatabase() {
@@ -100,12 +105,16 @@ class Chat {
 	#populate() {
 		let results = this.#db.select({
 			from: "message",
+			order: {
+				by: "instant",
+				type: "desc"
+			},
 			limit: 6
 		}).then(messages => {
 			for (const message of messages) {
 				const m = new Message()
 				m.assign(message)
-				this.#appendMessage(m)
+				this.#appendMessage(m, false)
 			}
 		})
 	}
