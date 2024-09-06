@@ -7,6 +7,15 @@
 	"scope": "/",
 	"background_color": "#98c8a1",
 	"theme_color": "#75a283",
+	"share_target": {
+		"action": "/?s",
+		"method": "GET",
+		"params": {
+			"title": "title",
+			"text": "text",
+			"url": "url"
+		}
+	},
 	"icons": [
 		{
 			"src": "img/logo.png",
