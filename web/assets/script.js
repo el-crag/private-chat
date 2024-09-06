@@ -54,6 +54,44 @@ class Chat {
 		messengerChat.appendChild(wrapper)
 		messengerChat.scrollTop += 500;
 	}
+
+	initDatabase() {
+		let tableOption = {
+			name: "option",
+			columns: {
+				key: { primaryKey: true, dataType: "string" },
+				option: { notNull: false, dataType: "string" },
+			}
+		}
+
+		let tableMessage = {
+			name: "message",
+			columns: {
+				uuid: { primaryKey: true, dataType: "string" },
+				sent: { notNull: true, dataType: "boolean" },
+				own: { notNull: true, dataType: "boolean" },
+				content: { notNull: true, dataType: "string" },
+				instant: { notNull: true, dataType: "date_time" },
+			}
+		}
+
+		let db = {
+			name: "chat",
+			tables: [
+				tableOption,
+				tableMessage,
+			],
+		}
+
+		this.#db.initDb(db).then((isDbCreated) => {
+			if(isDbCreated) {
+				alert("db created")
+			}
+		})
+		.catch(e => {
+			console.error(e)
+		})
+	}
 }
 
 class Message {
@@ -100,3 +138,4 @@ class Message {
 }
 
 var chat = new Chat()
+chat.initDatabase()
