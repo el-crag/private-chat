@@ -8,6 +8,18 @@ class Chat {
 		this.#security = new Security()
 	}
 
+	showNotice(destiny) {
+		switch (destiny) {
+			case "info":
+				notice.textContent = "Los mensajes se encriptan en este dispositivo y viajan a su destino."
+				break
+			default:
+				return
+		}
+
+		window.location = "#info"
+	}
+
 	configUser() {
 		let user = window.prompt("Nombre de usuario")
 		if (!user) {

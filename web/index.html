@@ -14,7 +14,7 @@
 		<section class="msger">
 			<header class="msger-header">
 				<div class="msger-header-title">
-					💬 Chat 1 a 1
+					<button type="button" onclick="chat.showNotice('info')">💬</button> Chat 1 a 1
 				</div>
 				<div class="msger-header-options">
 					<button type="button" onclick="chat.configUser()">👤</button>
@@ -31,6 +31,14 @@
 				<button id="messengerButton" type="submit" class="msger-send-btn">Enviar</button>
 			</form>
 		</section>
+
+		<div id="info" class="overlay">
+			<div class="popup">
+				<a class="close" href="#">&times;</a>
+				<div id="notice" class="content">
+				</div>
+			</div>
+		</div>
 		<script src="assets/script.js"></script>
 	</body>
 </html>
