@@ -32,6 +32,16 @@ class Chat {
 		return "Nombre cambiado."
 	}
 
+	emptyMessages() {
+		this.#db.remove({
+			from: "message"
+		})
+
+		messengerChat.replaceChildren()
+
+		return "Mensajes eliminados."
+	}
+
 	#saveUser() {
 		let option = {
 			key: "user",
@@ -218,7 +228,7 @@ class Message {
 			case "chat": // set receiver
 				break
 			case "empty": // clear messages database
-				break
+				return chat.emptyMessages()
 			default:
 				return "Instrucción no reconocida."
 		}
