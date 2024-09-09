@@ -20,15 +20,16 @@ class Chat {
 		window.location = "#info"
 	}
 
-	configUser() {
-		let user = window.prompt("Nombre de usuario")
+	configUser(user) {
 		if (!user) {
-			alert("Nombre no insertado.")
+			return "Nombre no insertado."
 		}
 
 		this.#user = user
 
 		this.#saveUser()
+
+		return "Nombre cambiado."
 	}
 
 	#saveUser() {
@@ -39,6 +40,7 @@ class Chat {
 
 		this.#db.insert({
 			validation: false,
+			upsert: true,
 			into: "option",
 			values: [option],
 		})
@@ -210,7 +212,7 @@ class Message {
 
 		switch (command) {
 			case "username":
-				chat.configUser()
+				return chat.configUser(args)
 				break
 			case "auth": // create key for signature
 				break
