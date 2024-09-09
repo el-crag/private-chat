@@ -210,7 +210,7 @@ class Message {
 
 		switch (command) {
 			case "username":
-				configUser()
+				chat.configUser()
 				break
 			default:
 				return "Instrucción no reconocida."
