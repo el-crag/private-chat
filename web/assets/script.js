@@ -213,7 +213,6 @@ class Message {
 		switch (command) {
 			case "username":
 				return chat.configUser(args)
-				break
 			case "auth": // create key for signature
 				break
 			case "chat": // set receiver
