@@ -56,6 +56,13 @@ class Chat {
 		form.reset()
 
 		message.save(this.#db)
+
+		if (message.isInstruction()) {
+			message = new Message(message.handleCommand(this), true)
+			message.setOwn(false)
+			this.#appendMessage(message)
+			message.save(this.#db)
+		}
 	}
 
 	#appendMessage(message, down = true) {
@@ -164,7 +171,7 @@ class Chat {
 			limit: 6
 		}).then(messages => {
 			for (const message of messages) {
-				const m = new Message()
+				const m = new Message(message.content)
 				m.assign(message)
 				this.#appendMessage(m, false)
 			}
@@ -178,6 +185,7 @@ class Message {
 	#status
 	#own
 	#uuid
+	#instructable
 
 	constructor(content, isNew = false) {
 		this.#content = content
@@ -188,10 +196,28 @@ class Message {
 		}
 
 		this.#own = true
+
+		this.#instructable = content.match(/^\/(\w+)\s*(.*)$/)
+	}
+
+	isInstruction() {
+		return !!this.#instructable
+	}
+
+	handleCommand(chat) {
+		const command = this.#instructable[1]
+		const args = this.#instructable[2]
+
+		switch (command) {
+			case "username":
+				configUser()
+				break
+			default:
+				return "Instrucción no reconocida."
+		}
 	}
 
 	assign(message) {
-		this.#content = message.content
 		this.#own = message.own
 		this.#uuid = message.uuid
 		this.#date = message.instant
