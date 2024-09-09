@@ -212,6 +212,12 @@ class Message {
 			case "username":
 				chat.configUser()
 				break
+			case "auth": // create key for signature
+				break
+			case "chat": // set receiver
+				break
+			case "empty": // clear messages database
+				break
 			default:
 				return "Instrucción no reconocida."
 		}
